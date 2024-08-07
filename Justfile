@@ -1,6 +1,7 @@
 # Example 161 from https://book.validatingrdf.com/bookHtml013.html
 ex161:
     hatch run pyshacl \
+        --metashacl \
         -s src/rdf_validation_comparison/data/ex161.shacl \
         src/rdf_validation_comparison/data/ex161.ttl
     # TODO check that -A is not used here
@@ -13,6 +14,7 @@ ex161:
 # Example 162 from https://book.validatingrdf.com/bookHtml013.html
 ex162:
     -hatch run pyshacl \
+        --metashacl \
         -s src/rdf_validation_comparison/data/ex162.shacl \
         src/rdf_validation_comparison/data/ex162.ttl
     -hatch run shexeval -A \
@@ -23,10 +25,12 @@ ex162:
 # Show the effect of RDFS inference on SHACL
 ch7_6-rdfs-inference:
     -hatch run pyshacl \
+        --metashacl \
         --inference=none \
         -s src/rdf_validation_comparison/data/ch7_6.shacl \
         src/rdf_validation_comparison/data/ch7_6.ttl
     -hatch run pyshacl \
+        --metashacl \
         --inference=rdfs \
         -s src/rdf_validation_comparison/data/ch7_6.shacl \
         src/rdf_validation_comparison/data/ch7_6.ttl
