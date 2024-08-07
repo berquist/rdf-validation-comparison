@@ -1,0 +1,11 @@
+PREFIX : <http://example.com/ns#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX schema: <http://schema.org/>
+
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+:User {
+ schema:name    xsd:string ;
+ ^schema:member @:Organization
+}
+:Organization { a [:Organization] }

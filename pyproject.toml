@@ -182,14 +182,8 @@ unfixable = [
     # "F401",  # Don't touch unused imports
 ]
 
-[tool.ruff.format]
-quote-style = "single" # be more like black
-
 [tool.ruff.lint.isort]
 known-first-party = ["rdf_validation_comparison"]
-
-[tool.ruff.lint.flake8-quotes]
-inline-quotes = "single"
 
 [tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"
@@ -197,6 +191,7 @@ ban-relative-imports = "all"
 [tool.ruff.lint.per-file-ignores]
 # Allow print/pprint
 "examples/*" = ["T201"]
+"src/rdf_validation_comparison/data/*" = ["T201"]
 # Tests can use magic values, assertions, and relative imports
 "tests/**/*" = ["PLR2004", "S101", "TID252"]
 
