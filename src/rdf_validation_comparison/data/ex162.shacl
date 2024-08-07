@@ -1,0 +1,25 @@
+@prefix : <http://example.com/ns#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: <http://schema.org/> .
+
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+:ProductShape a sh:NodeShape ;
+    sh:targetClass :Product ;
+    sh:or (
+        [ sh:path schema:productID ;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:pattern "^P" ;
+        sh:flags "i"
+        ]
+        [ sh:path schema:productID ;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:pattern "[0-9]$" ;
+        ]
+    );
+    sh:not [
+        sh:path schema:productID ;
+    sh:hasValue "P23"
+    ]  .

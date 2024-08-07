@@ -1,0 +1,10 @@
+PREFIX : <http://example.com/ns#>
+PREFIX schema: <http://schema.org/>
+
+:Product ({
+ schema:productID /^P/i ;
+} OR {
+ schema:productID /[0-9]$/ ;
+}) AND NOT {
+ schema:productID [ "P23" ]
+}

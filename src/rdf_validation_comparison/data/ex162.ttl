@@ -1,0 +1,15 @@
+@prefix : <http://example.com/ns#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: <http://schema.org/> .
+
+:p45 a :Product ;             # Passes as a :Product
+    schema:productID "P45" .
+
+:x23 a :Product ;             # Passes as a :Product
+    schema:productID "X23" .
+
+:p23 a :Product ;             # Fails as a :Product
+    schema:productID "P23" .
+
+:xx  a :Product ;             # Fails as a :Product
+    schema:productID "xx" .
