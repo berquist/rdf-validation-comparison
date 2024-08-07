@@ -6,8 +6,8 @@ Notion-API: https://developers.notion.com/reference/intro
 from importlib.metadata import PackageNotFoundError, version
 
 try:
-    __version__ = version('rdf-validation-comparison')
+    __version__ = version("rdf-validation-comparison")
 except PackageNotFoundError:  # pragma: no cover
-    __version__ = 'unknown'
+    __version__ = "unknown"
 finally:
     del version, PackageNotFoundError
