@@ -1,5 +1,5 @@
 @prefix : <http://example.com/ns#> .
-@prefix schema: <http://schema.org/> .
+@prefix schema: <https://schema.org/> .
 
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
