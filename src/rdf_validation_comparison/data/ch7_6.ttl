@@ -1,0 +1,16 @@
+@prefix : <http://example.com/ns#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+
+:Teacher rdfs:subClassOf :User .
+:teaches rdfs:domain :Teacher .
+
+:frank :teaches :Algebra ;    # Ignored without RDFS inference *)
+       schema:name "Frank" .  #Passes as a :UserShape with RDFS inference
+
+:grace :teaches :Logic ;      # Ignored without RDFS inference *)
+       schema:name 34 .       #Fails as a :UserShape with RDFS inference
+
+:oscar a :Teacher ;           #Fails as a :UserShape
+       schema:name 45 .
