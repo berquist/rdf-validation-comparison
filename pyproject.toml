@@ -26,12 +26,10 @@ classifiers = [ # ToDo: Modify according to your needs!
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
-# direct dependencies of this package, installed when users `pip install rdf-validation-comparison` later.
-dependencies = [ # ToDo: Modify according to your needs!
+dependencies = [
     "typer",
-    # "numpy",
-    # "matplotlib",
-    # "seaborn",
+    "pyshacl @ git+https://github.com/RDFLib/pySHACL.git@master",
+    "pyshex @ git+https://github.com/hsolbrig/PyShEx.git@master",
 ]
 dynamic = ["version"]
 
@@ -40,12 +38,9 @@ dynamic = ["version"]
 fibonacci = "rdf_validation_comparison.skeleton:app"
 
 [project.urls]
-# important URLs for this project
-# ToDo: Modify according to your needs!
 Documentation = "https://github.com/berquist/rdf-validation-comparison"
 Source = "https://github.com/berquist/rdf-validation-comparison"
-# Tracker = "https://github.com/berquist/rdf-validation-comparison/issues"
-# Sponsor = "https://github.com/sponsors/berquist"
+Tracker = "https://github.com/berquist/rdf-validation-comparison/issues"
 
 ######################
 # Build & Versioning #
