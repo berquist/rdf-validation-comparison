@@ -2,11 +2,7 @@
 
 Examples for comparing SHACL and ShEx
 
-## Features
-
-* Feature 1
-* Feature 2
-* ...
+See https://book.validatingrdf.com/bookHtml013.html for more information.
 
 ## Development
 

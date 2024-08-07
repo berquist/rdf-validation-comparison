@@ -1,0 +1,12 @@
+@prefix : <http://example.com/ns#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: <http://schema.org/> .
+
+:alice a :User ;               # Passes as a :User
+    schema:name "Alice" .
+
+:bob a :User ;
+    schema:name "Robert" .     # Fails as a :User
+
+    :myCompany a :Organization ;
+    schema:member :alice .

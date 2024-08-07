@@ -1,0 +1,11 @@
+PREFIX : <http://hl7.org/fhir/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ex: <http://our.org/example#>
+
+ex:Obs1
+  :status    "final" ;
+  :subject   ex:Patient2 .
+
+ex:Patient2
+  :name "Bob" ;
+  :birthdate "1999-12-31"^^xsd:date .
