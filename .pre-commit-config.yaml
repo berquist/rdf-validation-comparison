@@ -1,35 +1,38 @@
+---
 repos:
-- repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.5.0
-  hooks:
-  - id: trailing-whitespace
-  - id: check-added-large-files
-  - id: check-merge-conflict
-  - id: check-shebang-scripts-are-executable
-  - id: check-docstring-first
-  - id: debug-statements
-  - id: check-ast
-  - id: check-json
-  - id: check-toml
-  - id: check-xml
-  - id: check-yaml
-    args: ['--unsafe']  # needed for !! tags in mkdocs.yml
-  - id: end-of-file-fixer
-  - id: mixed-line-ending
-    args: ['--fix=auto']  # replace 'auto' with 'lf' to enforce Linux/Mac line endings or 'crlf' for Windows
-
-# Ruff replaces black, flake8, autoflake, isort and more
-- repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: 'v0.4.4'  # make sure this is always consistent with hatch configs
-  hooks:
-    - id: ruff
-      args: [--fix]
-    - id: ruff-format
-      args: [--check, --config, ./pyproject.toml]
-
-- repo: https://github.com/pre-commit/mirrors-mypy
-  rev: 'v1.9.0'  # make sure this is always consistent with hatch configs
-  hooks:
-    - id: mypy
-      args: ["--install-types", "--non-interactive"]
-      additional_dependencies: [types-tabulate, types-cachetools]
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v4.6.0"
+    hooks:
+      - id: check-ast
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+        args: [--fix, lf]
+      # TODO this doesn't work when CI runs on the default branch.
+      # - id: no-commit-to-branch
+      #   args: [--branch, main, --branch, master, --branch, devel, --branch, develop]
+      - id: trailing-whitespace
+  - repo: https://github.com/PyCQA/isort
+    rev: "5.13.2"
+    hooks:
+      - id: isort
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.1
+    hooks:
+      - id: ruff-format
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.11.1"
+    hooks:
+      - id: mypy
+        args: []

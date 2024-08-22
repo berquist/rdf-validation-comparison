@@ -2,23 +2,16 @@
 requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
-####################
-# Project Metadata #
-####################
-
 [project]
 name = "rdf-validation-comparison"
 description = "Examples for comparing SHACL and ShEx"
 readme = "README.md"
-requires-python = ">=3.9"# only license identifier from https://spdx.org/licenses/ are allowed
+requires-python = ">=3.9"
 license = { text = "BSD-3-Clause"}
-# keywords for easier look-up on PyPI
-keywords = ["keyword_1", "keyword_2"] # ToDo: Modify according to your needs!
 authors = [
     { name = "Eric Berquist", email = "eric.berquist@gmail.com" },
 ]
-# options under https://pypi.org/classifiers/
-classifiers = [ # ToDo: Modify according to your needs!
+classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.10",
@@ -27,25 +20,16 @@ classifiers = [ # ToDo: Modify according to your needs!
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-    "typer",
     "pyshacl @ git+https://github.com/RDFLib/pySHACL.git@master",
     "pyshex @ git+https://github.com/hsolbrig/PyShEx.git@master",
     "rdflib",
 ]
 dynamic = ["version"]
 
-[project.scripts]
-# Use `fibonacci` as command-line script, comment or remove this section if not needed.
-fibonacci = "rdf_validation_comparison.skeleton:app"
-
 [project.urls]
 Documentation = "https://github.com/berquist/rdf-validation-comparison"
 Source = "https://github.com/berquist/rdf-validation-comparison"
 Tracker = "https://github.com/berquist/rdf-validation-comparison/issues"
-
-######################
-# Build & Versioning #
-######################
 
 [tool.hatch.metadata]
 # direct dependency references, e.g `pip @ git+https://github.com/pypa/pip.git@master`
@@ -65,10 +49,6 @@ packages = ["src/rdf_validation_comparison"]
 exclude = [
     "/.github",
 ]
-
-##################
-# External Tools #
-##################
 
 [tool.mypy]
 files = ["src/rdf_validation_comparison", "tests"]
@@ -217,23 +197,11 @@ dependencies = []
 upgrade-all = "PIP_COMPILE_UPGRADE=1 hatch env run --env {env_name} -- python --version"
 upgrade-pkg = "PIP_COMPILE_UPGRADE_PACKAGE='{args}' hatch env run --env {env_name} -- python --version"
 
-# Test environment with test-only dependencies
 [tool.hatch.envs.test]
 dependencies = [
-    # required test dependencies
     "coverage[toml]>=6.2",
     "pytest",
     "pytest-cov",
-    "pytest-mock",
-    "pytest-vcr",
-    "pytest-sugar",
-    # additional test & development dependencies
-    # ToDo: Modify according to your needs!
-    "hypothesis",
-    "jupyterlab",
-    "ipython",
-    "seaborn",
-    "pandas",
 ]
 [tool.hatch.envs.test.scripts]
 cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=src/rdf_validation_comparison --cov=tests {args}"
