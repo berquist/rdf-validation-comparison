@@ -30,6 +30,7 @@ dependencies = [
     "typer",
     "pyshacl @ git+https://github.com/RDFLib/pySHACL.git@master",
     "pyshex @ git+https://github.com/hsolbrig/PyShEx.git@master",
+    "rdflib",
 ]
 dynamic = ["version"]
 

@@ -1,6 +1,6 @@
 from pyshex.evaluate import evaluate
 from rdflib import Graph, Namespace
-from rdflib.namespaces import XSD
+from rdflib.namespace import XSD
 
 EX = Namespace("http://our.org/example#")
 FHIR = Namespace("http://hl7.org/fhir/")
