@@ -1,3 +1,5 @@
+default: ex161 ex162 ch7_6-rdfs-inference pyshex_notebooks_shex_example
+
 # Example 161 from https://book.validatingrdf.com/bookHtml013.html
 ex161:
     hatch run pyshacl \
@@ -46,3 +48,7 @@ pyshex_notebooks_shex_example:
         --focus "http://our.org/example#Obs1" \
         src/rdf_validation_comparison/data/pyshex_notebooks_shex_example.ttl \
         src/rdf_validation_comparison/data/pyshex_notebooks_shex_example.shex
+
+# Run pre-commit on the project
+pre:
+    pre-commit run -a

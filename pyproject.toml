@@ -1,7 +1,3 @@
-[build-system]
-requires = ["hatchling", "hatch-vcs"]
-build-backend = "hatchling.build"
-
 [project]
 name = "rdf-validation-comparison"
 description = "Examples for comparing SHACL and ShEx"
@@ -31,6 +27,10 @@ Documentation = "https://github.com/berquist/rdf-validation-comparison"
 Source = "https://github.com/berquist/rdf-validation-comparison"
 Tracker = "https://github.com/berquist/rdf-validation-comparison/issues"
 
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
 [tool.hatch.metadata]
 # direct dependency references, e.g `pip @ git+https://github.com/pypa/pip.git@master`
 allow-direct-references = true
@@ -50,42 +50,11 @@ exclude = [
     "/.github",
 ]
 
-[tool.mypy]
-files = ["src/rdf_validation_comparison", "tests"]
-disallow_untyped_defs = false
-follow_imports = "normal" # "silent" for not following
-ignore_missing_imports = true
-pretty = true
-show_column_numbers = true
-warn_no_return = false
-warn_unused_ignores = true
-
-[tool.pytest.ini_options]
-minversion = "6.0"
-addopts = "-ra -q --doctest-glob='*.md'"
-testpaths = [
-    "tests",
-]
-
-[tool.coverage.run]
-branch = true
-source = ["src/rdf_validation_comparison"]
-omit = [
-    "_version.py",  # automatically created by hatch-vcs, not in repo
-]
-
-[tool.coverage.paths]
-source = [
-    "src/",
-    "*/site-packages/",
-]
+[tool.coverage.html]
+directory = "build/coverage/htmlcov"
 
 [tool.coverage.report]
-# Regexes for lines to exclude from consideration
-exclude_lines = [
-    # Have to re-enable the standard pragma
-    "pragma: no cover",
-
+exclude_also = [
     # Don't complain about missing debug-only code:
     "def __repr__",
     "if self\\.debug",
@@ -95,120 +64,156 @@ exclude_lines = [
     "raise NotImplementedError",
 
     # Don't complain if non-runnable code isn't run:
+    "if False:",
     "if 0:",
     "if __name__ == .__main__.:",
     "if TYPE_CHECKING:",
+    "\\w*pass$",
+
+    # No implementation
+    "@(abc\\.)?abstractmethod",
+    # Type stub
+    "\\w*\\.\\.\\.$",
 ]
 
-[tool.ruff]
-target-version = "py39" # ToDo: Modify according to your needs!
-line-length = 120
-indent-width = 4
-include = [
-    "src/**/*.py",
-    "src/**/*.pyi",
-    "tests/**/*.py",
-    "tests/**/*.pyi"
+[tool.coverage.run]
+branch = true
+data_file = "build/coverage/.coverage"
+omit = [
+    "_version.py",  # automatically created by hatch-vcs, not in repo
 ]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+# default is FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER
+# Placing third-party imports at the end makes their inclusion more obvious
+sections = [
+    "FUTURE",
+    "STDLIB",
+    "FIRSTPARTY",
+    "THIRDPARTY",
+    "LOCALFOLDER",
+]
+
+[tool.mypy]
+cache_dir = "build/.mypy_cache"
+color_output = true
+error_summary = true
+pretty = true
+strict = true
+
+[tool.pytest.ini_options]
+addopts = "--doctest-glob='*.md' --isort --ruff --ruff-format"
+cache_dir = "build/.pytest_cache"
+
+[tool.ruff]
+cache-dir = "build/.ruff_cache"
+exclude = [
+    "src/qspec_rdf_interop/_version.py",
+]
+target-version = "py39"
+line-length = 100
+
+[tool.ruff.format]
+skip-magic-trailing-comma = true
 
 [tool.ruff.lint]
 preview = true # preview features & checks, use with caution
-extend-select = [ # features in preview
-    "W292", # missing-newline-at-end-of-file
-]
-select = [
+extend-select = [
     "A",
+    "ARG",
     "B",
-    "C",
-    "DTZ",
-    "E",
-    "EM",
-    "F",
-    "FBT", # Boolean trap
-    "I",
-    "ICN",
-    "ISC",
-    "N",
-    "PLC",
-    "PLE",
-    "PLR",
-    "PLW",
-    "Q",
+    # "C",
+    # "DTZ",
+    # "E",
+    # "EM",
+    # "F",
+    # "FBT", # Boolean trap
+    # "I",
+    # "ICN",
+    # "ISC",
+    # "N",
+    # "PLC",
+    # "PLE",
+    # "PLR",
+    # "PLW",
+    # "Q",
     "RUF",
-    "S",
-    "SIM",
-    "T",
-    "TID",
+    # "S",
+    # "SIM",
+    # "T",
+    # "TID",
     "UP",
-    "W",
-    "YTT",
+    # "W",
+    # "YTT",
     "RUF100", # Automatically remove unused # noqa directives
+    # features in preview
+    # "W292", # missing-newline-at-end-of-file
 ]
-ignore = [
-    # Allow non-abstract empty methods in abstract base classes
-    "B027",
-    # Allow boolean positional values in function calls, like `dict.get(... True)`
-    "FBT003",
-    # Ignore checks for possible passwords
-    "S105", "S106", "S107",
-    # Ignore complexity
-    "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915",
-    "PLC1901", # empty string comparisons
-    "PLW2901", # `for` loop variable overwritten
-    "SIM114", # Combine `if` branches using logical `or` operator
-    "E203", # Whitespace before :, needed for black compatability and also `ruff format`
-    "ISC001", # causes unexpected behaviour with formatter
-]
-unfixable = [
-    # "F401",  # Don't touch unused imports
-]
+# ignore = [
+#     # Allow non-abstract empty methods in abstract base classes
+#     "B027",
+#     # Allow boolean positional values in function calls, like `dict.get(... True)`
+#     "FBT003",
+#     # Ignore checks for possible passwords
+#     "S105", "S106", "S107",
+#     # Ignore complexity
+#     "C901", "PLR0911", "PLR0912", "PLR0913", "PLR0915",
+#     "PLC1901", # empty string comparisons
+#     "PLW2901", # `for` loop variable overwritten
+#     "SIM114", # Combine `if` branches using logical `or` operator
+#     "E203", # Whitespace before :, needed for black compatability and also `ruff format`
+#     "ISC001", # causes unexpected behaviour with formatter
+# ]
 
 [tool.ruff.lint.isort]
 known-first-party = ["rdf_validation_comparison"]
+lines-after-imports = 2
+section-order = [
+    "future",
+    "standard-library",
+    "first-party",
+    "third-party",
+    "local-folder",
+]
 
 [tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"
 
-[tool.ruff.lint.per-file-ignores]
-# Allow print/pprint
-"examples/*" = ["T201"]
-"src/rdf_validation_comparison/data/*" = ["T201"]
-# Tests can use magic values, assertions, and relative imports
-"tests/**/*" = ["PLR2004", "S101", "TID252"]
-
-
-#####################
-# Environment Setup #
-#####################
+# [tool.ruff.lint.per-file-ignores]
+# # Allow print/pprint
+# "examples/*" = ["T201"]
+# "src/rdf_validation_comparison/data/*" = ["T201"]
+# # Tests can use magic values, assertions, and relative imports
+# "tests/**/*" = ["PLR2004", "S101", "TID252"]
 
 [tool.hatch.env]
 requires = ["hatch-pip-compile~=1.11.1"]
 
-# Default environment with production dependencies
 [tool.hatch.envs.default]
 python = "3.9"
 post-install-commands = ["pre-commit install"]
 type = "pip-compile"
 pip-compile-constraint = "default"  # keep locks between default & others consistent
 lock-filename = "locks/{env_name}.lock"
-pip-compile-hashes = false  # no hashes in lock files
+pip-compile-hashes = false
+# specified in [project.dependencies]
 dependencies = []
 [tool.hatch.envs.default.scripts]
 upgrade-all = "PIP_COMPILE_UPGRADE=1 hatch env run --env {env_name} -- python --version"
 upgrade-pkg = "PIP_COMPILE_UPGRADE_PACKAGE='{args}' hatch env run --env {env_name} -- python --version"
 
-[tool.hatch.envs.test]
-dependencies = [
-    "coverage[toml]>=6.2",
-    "pytest",
-    "pytest-cov",
-]
-[tool.hatch.envs.test.scripts]
-cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=src/rdf_validation_comparison --cov=tests {args}"
-no-cov = "cov --no-cov {args}"
-debug =  "cov --no-cov -s --pdb --pdbcls=IPython.core.debugger:Pdb {args}"
+[tool.hatch.envs.hatch-test]
+extra-args = ["-v"]
+[tool.hatch.envs.hatch-test.scripts]
+# defaults (required for any overrides)
+run = "pytest{env:HATCH_TEST_ARGS:} {args}"
+run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
+cov-combine = "coverage combine"
+# override: add HTML generation
+cov-report = "coverage report; coverage html"
 
-# Docs environment
 [tool.hatch.envs.docs]
 dependencies = [
     "mkdocs~=1.5",
@@ -230,7 +235,7 @@ dependencies = [
     "pygments~=2.13",
     # Validation
     "linkchecker~=10.3",
-    ]
+]
 [tool.hatch.envs.docs.env-vars]
 SOURCE_DATE_EPOCH = "1580601600"
 PYTHONUNBUFFERED = "1"
@@ -247,34 +252,38 @@ build-check = [
     "validate",
 ]
 
-# Lint environment
-[tool.hatch.envs.lint]
-template = "lint"  # don't inherit from default!
+[tool.hatch.envs.format-and-lint]
 dependencies = [
-    "mypy==1.10.0",
-    "ruff==0.4.4",
+    "isort",
+    "mypy",
+    "ruff",
+    # needed for mypy
+    "pytest",
 ]
-[tool.hatch.envs.lint.scripts]
+# TODO doesn't work as long as `extra-dependencies` aren't inherited
+# extra-dependencies = [
+#     "mypy",
+# ]
+# template = "hatch-test"
+[tool.hatch.envs.format-and-lint.scripts]
 typing = [
     "echo \"VERSION: `mypy --version`\"",
     "mypy --install-types --non-interactive {args}"
 ]
 style = [
+    "echo \"VERSION: `isort --version`\"",
+    "isort --check-only {args:.}",
     "echo \"VERSION: `ruff --version`\"",
     "ruff check {args:.}",
     "ruff format --check {args:.}",
 ]
 fix = [
+    "isort {args:.}",
     "ruff format {args:.}",
     "ruff check --fix {args:.}",
     "style",  # feedback on what is not fixable
 ]
 all = [
-    "style",
+    "fix",
     "typing",
 ]
-
-# Test matrix for various Python versions replacing the functionality of tox
-[[tool.hatch.envs.py-test.matrix]]
-template = ["test"]
-python = ["310", "311", "312"]
