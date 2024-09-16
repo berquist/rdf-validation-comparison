@@ -204,15 +204,28 @@ dependencies = []
 upgrade-all = "PIP_COMPILE_UPGRADE=1 hatch env run --env {env_name} -- python --version"
 upgrade-pkg = "PIP_COMPILE_UPGRADE_PACKAGE='{args}' hatch env run --env {env_name} -- python --version"
 
-[tool.hatch.envs.hatch-test]
-extra-args = ["-v"]
-[tool.hatch.envs.hatch-test.scripts]
-# defaults (required for any overrides)
-run = "pytest{env:HATCH_TEST_ARGS:} {args}"
-run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
-cov-combine = "coverage combine"
-# override: add HTML generation
-cov-report = "coverage report; coverage html"
+[tool.hatch.envs.test]
+dependencies = [
+    "coverage[toml]",
+    "pytest",
+    "pytest-cov",
+    "pytest-isort",
+    "pytest-ruff",
+]
+[tool.hatch.envs.test.scripts]
+cov = "python -m pytest --cov-report=term-missing --cov-report=html {args}"
+no-cov = "cov --no-cov {args}"
+debug = "cov --no-cov -s --pdb --pdbcls=IPython.core.debugger:Pdb {args}"
+
+# [tool.hatch.envs.hatch-test]
+# extra-args = ["-v"]
+# [tool.hatch.envs.hatch-test.scripts]
+# # defaults (required for any overrides)
+# run = "pytest{env:HATCH_TEST_ARGS:} {args}"
+# run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
+# cov-combine = "coverage combine"
+# # override: add HTML generation
+# cov-report = "coverage report; coverage html"
 
 [tool.hatch.envs.docs]
 dependencies = [
