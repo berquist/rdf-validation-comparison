@@ -19,14 +19,16 @@ a `hatch run ...`. This helps with reproducability and avoids forgetting to spec
 hatch workflow is to specify everything directly in [pyproject.toml](pyproject.toml). Only in rare cases, you
 will use `hatch shell` to enter the `default` environment, which is similar to what you may know from other tools.
 
-To get you started, use `hatch test -c` or `hatch test` to run the unitest with or without coverage reports,
-respectively. Use `hatch run format-and-lint:all` to run all kinds of typing and linting checks. Use `hatch run docs:serve` to build and serve your documentation.
-You can also easily define your own environments and commands. Check out the environment setup of hatch
-in [pyproject.toml](pyproject.toml) for more commands as well as the package, build and tool configuration.
+To get you started, use `hatch run test:cov` or `hatch run test:no-cov` to run the unitest with or without coverage reports, respectively.
+Use `hatch run format-and-lint:all` to run all kinds of typing and linting checks.
+Use `hatch run docs:serve` to build and serve your documentation.
+You can also easily define your own environments and commands.
+Check out the environment setup of hatch in [pyproject.toml](pyproject.toml) for more commands as well as the package, build and tool configuration.
 
 The environments defined by hatch are configured to generate lock files using [hatch-pip-compile] under `locks`.
-To upgrade all packages in an environment like `format-and-lint`, just run `hatch run format-and-lint:upgrade-all`. To upgrade specific
-packages, type `hatch run format-and-lint:upgrade-pkg pkg1,pkg2`.
+To upgrade all packages in an environment like `format-and-lint`,
+just run `hatch run format-and-lint:upgrade-all`.
+To upgrade specific packages, type `hatch run format-and-lint:upgrade-pkg pkg1,pkg2`.
 
 ## Credits
 
