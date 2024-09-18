@@ -16,8 +16,8 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-    "pyshacl @ git+https://github.com/RDFLib/pySHACL.git@master",
-    "pyshex @ git+https://github.com/hsolbrig/PyShEx.git@master",
+    "pyshacl @ git+https://github.com/RDFLib/pySHACL.git@f27cd87941ce68c19d1a00adc326dbcd12063cf9",
+    "pyshex @ git+https://github.com/berquist/PyShEx.git@079818c2bef3867065cdbfe0db42c50692d20099",
     "rdflib",
 ]
 dynamic = ["version"]
@@ -217,6 +217,7 @@ cov = "python -m pytest --cov-report=term-missing --cov-report=html {args}"
 no-cov = "cov --no-cov {args}"
 debug = "cov --no-cov -s --pdb --pdbcls=IPython.core.debugger:Pdb {args}"
 
+# Removed in favor of explicit locked test env
 # [tool.hatch.envs.hatch-test]
 # extra-args = ["-v"]
 # [tool.hatch.envs.hatch-test.scripts]
