@@ -197,7 +197,7 @@ post-install-commands = ["pre-commit install"]
 type = "pip-compile"
 pip-compile-constraint = "default"  # keep locks between default & others consistent
 lock-filename = "locks/{env_name}.lock"
-pip-compile-hashes = false
+pip-compile-hashes = true
 # specified in [project.dependencies]
 dependencies = []
 [tool.hatch.envs.default.scripts]
