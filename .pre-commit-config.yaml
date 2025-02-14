@@ -1,4 +1,5 @@
 ---
+fail_fast: false
 repos:
   - repo: meta
     hooks:
@@ -11,6 +12,7 @@ repos:
       - id: check-added-large-files
       - id: check-case-conflict
       - id: check-merge-conflict
+      - id: check-json
       - id: check-toml
       - id: check-yaml
       - id: end-of-file-fixer
