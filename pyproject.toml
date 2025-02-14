@@ -110,9 +110,9 @@ cache_dir = "build/.pytest_cache"
 
 [tool.ruff]
 cache-dir = "build/.ruff_cache"
-# exclude = [
-#     "src/qspec_rdf_interop/_version.py",
-# ]
+exclude = [
+    "_version.py",
+]
 include = [
     "src/**/*.py",
     "src/**/*.pyi",
