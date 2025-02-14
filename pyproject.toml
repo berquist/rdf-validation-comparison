@@ -109,8 +109,14 @@ cache_dir = "build/.pytest_cache"
 
 [tool.ruff]
 cache-dir = "build/.ruff_cache"
-exclude = [
-    "src/qspec_rdf_interop/_version.py",
+# exclude = [
+#     "src/qspec_rdf_interop/_version.py",
+# ]
+include = [
+    "src/**/*.py",
+    "src/**/*.pyi",
+    "tests/**/*.py",
+    "tests/**/*.pyi"
 ]
 target-version = "py39"
 line-length = 100
