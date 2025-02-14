@@ -30,6 +30,7 @@ jobs:
         hatch run test:cov
     - uses: codecov/codecov-action@v4
       with:
+        files: ./build/coverage/coverage.xml
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
         verbose: true

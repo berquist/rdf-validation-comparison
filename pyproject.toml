@@ -84,6 +84,9 @@ omit = [
     "_version.py",  # automatically created by hatch-vcs, not in repo
 ]
 
+[tool.coverage.xml]
+output = "build/coverage/coverage.xml"
+
 [tool.isort]
 profile = "black"
 line_length = 100
@@ -220,7 +223,7 @@ dependencies = [
     "pytest-ruff",
 ]
 [tool.hatch.envs.test.scripts]
-cov = "python -m pytest --cov-report=term-missing --cov-report=html {args}"
+cov = "python -m pytest --cov-report=term-missing --cov-report=html --cov-report=xml {args}"
 no-cov = "cov --no-cov {args}"
 debug = "cov --no-cov -s --pdb {args}"
 
