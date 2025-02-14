@@ -294,6 +294,7 @@ dependencies = [
 # ]
 # template = "hatch-test"
 [tool.hatch.envs.format-and-lint.scripts]
+# TODO add to parent script
 docker = [
     "echo \"VERSION: `hadolint --version`\"",
     "hadolint {args:./Dockerfile}",
