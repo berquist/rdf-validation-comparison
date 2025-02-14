@@ -16,8 +16,8 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-    "pyshacl @ git+https://github.com/RDFLib/pySHACL.git@master",
-    "pyshex @ git+https://github.com/hsolbrig/PyShEx.git@master",
+    "pyshacl @ git+https://github.com/RDFLib/pySHACL.git@f27cd87941ce68c19d1a00adc326dbcd12063cf9",
+    "pyshex @ git+https://github.com/berquist/PyShEx.git@079818c2bef3867065cdbfe0db42c50692d20099",
     "rdflib",
 ]
 dynamic = ["version"]
@@ -54,6 +54,7 @@ exclude = [
 directory = "build/coverage/htmlcov"
 
 [tool.coverage.report]
+# exclude_also requires 7.2.0+; earlier requires exclude_lines
 exclude_also = [
     # Don't complain about missing debug-only code:
     "def __repr__",
@@ -83,6 +84,9 @@ omit = [
     "_version.py",  # automatically created by hatch-vcs, not in repo
 ]
 
+[tool.coverage.xml]
+output = "build/coverage/coverage.xml"
+
 [tool.isort]
 profile = "black"
 line_length = 100
@@ -110,7 +114,13 @@ cache_dir = "build/.pytest_cache"
 [tool.ruff]
 cache-dir = "build/.ruff_cache"
 exclude = [
-    "src/qspec_rdf_interop/_version.py",
+    "_version.py",
+]
+include = [
+    "src/**/*.py",
+    "src/**/*.pyi",
+    "tests/**/*.py",
+    "tests/**/*.pyi"
 ]
 target-version = "py39"
 line-length = 100
@@ -204,37 +214,57 @@ dependencies = []
 upgrade-all = "PIP_COMPILE_UPGRADE=1 hatch env run --env {env_name} -- python --version"
 upgrade-pkg = "PIP_COMPILE_UPGRADE_PACKAGE='{args}' hatch env run --env {env_name} -- python --version"
 
-[tool.hatch.envs.hatch-test]
-extra-args = ["-v"]
-[tool.hatch.envs.hatch-test.scripts]
-# defaults (required for any overrides)
-run = "pytest{env:HATCH_TEST_ARGS:} {args}"
-run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
-cov-combine = "coverage combine"
-# override: add HTML generation
-cov-report = "coverage report; coverage html"
+[tool.hatch.envs.test]
+dependencies = [
+    "coverage[toml]",
+    "pytest",
+    "pytest-cov",
+    "pytest-isort",
+    "pytest-ruff",
+]
+[tool.hatch.envs.test.scripts]
+cov = "python -m pytest --cov --cov-report=term-missing --cov-report=html --cov-report=xml {args}"
+no-cov = "cov --no-cov {args}"
+debug = "cov --no-cov -s --pdb {args}"
+
+# Removed in favor of explicit locked test env
+# [tool.hatch.envs.hatch-test]
+# extra-args = ["-v"]
+# extra-dependencies = [
+#     "isort",
+#     "pytest-isort",
+#     "pytest-ruff",
+#     "ruff",
+# ]
+# [tool.hatch.envs.hatch-test.scripts]
+# # defaults (required for any overrides)
+# run = "pytest{env:HATCH_TEST_ARGS:} {args}"
+# run-cov = "coverage run -m pytest{env:HATCH_TEST_ARGS:} {args}"
+# cov-combine = "coverage combine"
+# # override: add HTML generation
+# cov-report = "coverage report; coverage html"
 
 [tool.hatch.envs.docs]
 dependencies = [
-    "mkdocs~=1.5",
+    "mkdocs~=1.6",
     "mkdocs-material[imaging]~=9.4",
     # Plugins
     "mkdocs-include-markdown-plugin",
     "mkdocs-gen-files",
     "mkdocs-literate-nav",
-    "mkdocs-minify-plugin~=0.5",
+    "mkdocs-minify-plugin~=0.8",
     "mkdocs-section-index",
-    "mkdocs-git-revision-date-localized-plugin~=1.1",
+    "mkdocs-git-revision-date-localized-plugin~=1.2",
     "mkdocstrings[python]",
     "mkdocs-redirects~=1.2",
-    "mkdocs-glightbox~=0.3.0",
-    "mike~=2.0.0",
+    "mkdocs-glightbox~=0.4.0",
+    "mike~=2.1",
     # Extensions
-    "pymdown-extensions~=10.5",
+    "pymdown-extensions~=10.9",
     # Necessary for syntax highlighting in code blocks
-    "pygments~=2.13",
+    "pygments~=2.18",
     # Validation
-    "linkchecker~=10.3",
+    "linkchecker~=10.4",
 ]
 [tool.hatch.envs.docs.env-vars]
 SOURCE_DATE_EPOCH = "1580601600"
@@ -254,6 +284,7 @@ build-check = [
 
 [tool.hatch.envs.format-and-lint]
 dependencies = [
+    "hadolint-py @ git+https://github.com/AleksaC/hadolint-py.git@v2.12.1b3",
     "isort",
     "mypy",
     "ruff",
@@ -266,6 +297,11 @@ dependencies = [
 # ]
 # template = "hatch-test"
 [tool.hatch.envs.format-and-lint.scripts]
+# TODO add to parent script
+docker = [
+    "echo \"VERSION: `hadolint --version`\"",
+    "hadolint {args:./Dockerfile}",
+]
 typing = [
     "echo \"VERSION: `mypy --version`\"",
     "mypy --install-types --non-interactive {args}"

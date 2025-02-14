@@ -20,16 +20,17 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install hatch pre-commit
+        python -m pip install hatch pre-commit
         hatch env create
     - name: Lint and typecheck
       run: |
-        hatch run lint:lint-check
+        hatch run format-and-lint:all
     - name: Run Tests
       run: |
-        hatch run test:pytest
+        hatch run test:cov
     - uses: codecov/codecov-action@v4
       with:
+        files: ./build/coverage/coverage.xml
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
         verbose: true
@@ -53,7 +54,7 @@ jobs:
       shell: bash
       run: |
         python -m pip install --upgrade pip
-        pip install hatch pre-commit
+        python -m pip install hatch pre-commit
     - name: Build
       run: |
         hatch build
