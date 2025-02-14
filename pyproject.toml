@@ -54,6 +54,7 @@ exclude = [
 directory = "build/coverage/htmlcov"
 
 [tool.coverage.report]
+# exclude_also requires 7.2.0+; earlier requires exclude_lines
 exclude_also = [
     # Don't complain about missing debug-only code:
     "def __repr__",
@@ -226,6 +227,12 @@ debug = "cov --no-cov -s --pdb {args}"
 # Removed in favor of explicit locked test env
 # [tool.hatch.envs.hatch-test]
 # extra-args = ["-v"]
+# extra-dependencies = [
+#     "isort",
+#     "pytest-isort",
+#     "pytest-ruff",
+#     "ruff",
+# ]
 # [tool.hatch.envs.hatch-test.scripts]
 # # defaults (required for any overrides)
 # run = "pytest{env:HATCH_TEST_ARGS:} {args}"
