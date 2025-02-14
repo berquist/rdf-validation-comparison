@@ -281,6 +281,7 @@ build-check = [
 
 [tool.hatch.envs.format-and-lint]
 dependencies = [
+    "hadolint-py @ git+https://github.com/AleksaC/hadolint-py.git@v2.12.1b3",
     "isort",
     "mypy",
     "ruff",
@@ -293,6 +294,10 @@ dependencies = [
 # ]
 # template = "hatch-test"
 [tool.hatch.envs.format-and-lint.scripts]
+docker = [
+    "echo \"VERSION: `hadolint --version`\"",
+    "hadolint {args:./Dockerfile}",
+]
 typing = [
     "echo \"VERSION: `mypy --version`\"",
     "mypy --install-types --non-interactive {args}"
