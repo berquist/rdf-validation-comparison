@@ -221,7 +221,7 @@ dependencies = [
 [tool.hatch.envs.test.scripts]
 cov = "python -m pytest --cov-report=term-missing --cov-report=html {args}"
 no-cov = "cov --no-cov {args}"
-debug = "cov --no-cov -s --pdb --pdbcls=IPython.core.debugger:Pdb {args}"
+debug = "cov --no-cov -s --pdb {args}"
 
 # Removed in favor of explicit locked test env
 # [tool.hatch.envs.hatch-test]
